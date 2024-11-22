@@ -56,7 +56,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12', '3.x']
+        python-version: ['3.7', '3.8', '3.9', '3.10', '3.11', '3.12']
         exclude:
           # Exclude some combinations that might be problematic
           - os: windows-latest
@@ -81,7 +81,7 @@ jobs:
           
       - name: Run tests
         run: |
-          pytest --cov=copilot_api --cov-report=xml --cov-report=term-missing
+          pytest --cov=copilot_api --cov-report=xml --cov-report=term-missing tests/
           
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
@@ -106,14 +106,16 @@ jobs:
           pip install vermin
           vermin --no-tips --violations --target=3.7 copilot_api/
 
-  build:
-    name: Build Package
+  release:
+    name: Create Release
     needs: [quality, test, compatibility]
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -138,31 +140,34 @@ jobs:
       - name: Test Package Installation
         run: |
           python -m venv test_env
-          source test_env/bin/activate || . test_env/bin/activate
+          source test_env/bin/activate
           pip install dist/*.whl
           python -c "import copilot_api; print(copilot_api.__version__)"
           deactivate
-        
-      - name: Create Release
+          
+      - name: Generate Release Notes
+        id: release_notes
+        run: |
+          echo "Generating release notes..."
+          # Get the latest tag
+          latest_tag=$(git describe --tags --abbrev=0)
+          # Get the previous tag
+          previous_tag=$(git describe --tags --abbrev=0 HEAD^)
+          # Generate changelog
+          echo "## What's Changed" > release_notes.md
+          git log --pretty=format:"* %s" $previous_tag..$latest_tag >> release_notes.md
+          
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: dist/*
-          generate_release_notes: true
-          
-      - name: Publish to Test PyPI
-        if: startsWith(github.ref, 'refs/tags/')
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-        run: |
-          twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+          body_path: release_notes.md
+          draft: false
+          prerelease: false
           
       - name: Publish to PyPI
-        if: startsWith(github.ref, 'refs/tags/')
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
         run: |
-          echo "Publishing to PyPI..."
-          twine upload --verbose dist/*
+          twine upload dist/*
