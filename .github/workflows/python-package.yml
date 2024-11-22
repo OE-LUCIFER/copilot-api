@@ -104,7 +104,7 @@ jobs:
       - name: Check Python compatibility
         run: |
           pip install vermin
-          vermin --no-tips --violations copilot_api/
+          vermin --no-tips --violations --target=3.7 copilot_api/
 
   build:
     name: Build Package
