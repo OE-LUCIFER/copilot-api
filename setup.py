@@ -1,16 +1,25 @@
+import os
+import re
 from setuptools import setup, find_packages
-from copilot_api import *
+
+def get_version():
+    init_py = open(os.path.join('copilot_api', '__init__.py')).read()
+    metadata = dict(re.findall(r"__([a-z]+)__ = '([^']+)'", init_py))
+    return metadata
+
+metadata = get_version()
+
 with open("README.md", encoding="utf-8") as f:
     README = f.read()
 
 setup(
-    name=__title__,
-    version=__version__,
+    name=metadata['title'],
+    version=metadata['version'],
     description="An unofficial Python API wrapper for Microsoft Copilot",
     long_description=README,
     long_description_content_type="text/markdown",
-    author=__author__,
-    author_email=__email__,
+    author=metadata['author'],
+    author_email=metadata['email'],
     packages=find_packages(),
     python_requires=">=3.7",
     classifiers=[
@@ -50,25 +59,16 @@ setup(
             "black>=22.0.0",
             "isort>=5.0.0",
             "flake8>=4.0.0",
+            "mypy>=0.910",
         ],
-        "docs": [
-            "sphinx>=4.0.0",
-            "sphinx-rtd-theme>=1.0.0",
+        "test": [
+            "pytest>=7.0.0",
+            "pytest-asyncio>=0.18.0",
+            "pytest-cov>=2.12.0",
         ],
     },
     project_urls={
-        "Source": "https://github.com/OE-LUCIFER/copilot-api",
-        "Tracker": "https://github.com/OE-LUCIFER/copilot-api/issues",
-        "YouTube": "https://youtube.com/@OEvortex",
-
-        "Changelog": "https://github.com/OE-LUCIFER/copilot-api/releases",
-        "Funding": "https://github.com/sponsors/OE-LUCIFER",
-    },
-    keywords=["copilot", "api", "chatbot", "microsoft", "ai", "assistant"],
-    entry_points={
-        "console_scripts": [
-            "copilot=copilot_api.cli:cli",
-            "copilot-cli=copilot_api.cli:chat",
-        ],
+        "Homepage": "https://github.com/OE-LUCIFER/copilot-api",
+        "Bug Tracker": "https://github.com/OE-LUCIFER/copilot-api/issues",
     },
 )
