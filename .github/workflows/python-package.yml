@@ -164,10 +164,3 @@ jobs:
           body_path: release_notes.md
           draft: false
           prerelease: false
-          
-      - name: Publish to PyPI
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-        run: |
-          twine upload dist/*
