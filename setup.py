@@ -41,6 +41,7 @@ setup(
         "click>=8.0.0",
         "rich>=10.0.0",
         "prompt-toolkit>=3.0.0",
+        "curl_cffi>=0.7.1",
     ],
     extras_require={
         "dev": [
