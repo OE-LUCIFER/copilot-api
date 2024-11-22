@@ -1,22 +1,22 @@
 from setuptools import setup, find_packages
-
+from copilot_api import *
 with open("README.md", encoding="utf-8") as f:
     README = f.read()
 
 setup(
-    name="copilot-api",
-    version="0.1.0",
+    name=__title__,
+    version=__version__,
     description="An unofficial Python API wrapper for Microsoft Copilot",
     long_description=README,
     long_description_content_type="text/markdown",
-    author="OEvortex",
-    author_email="helpingai5@gmail.com",
+    author=__author__,
+    author_email=__email__,
     packages=find_packages(),
     python_requires=">=3.7",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: MIT License",
+        "License :: Other/Proprietary License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.7",
