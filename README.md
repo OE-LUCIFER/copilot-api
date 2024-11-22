@@ -6,7 +6,9 @@
 [![Python](https://img.shields.io/pypi/pyversions/copilot-api.svg)](https://pypi.org/project/copilot-api/)
 [![License: HelpingAI](https://img.shields.io/badge/License-HelpingAI-blue.svg)](https://github.com/OE-LUCIFER/copilot-api/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/OE-LUCIFER/copilot-api)](https://github.com/OE-LUCIFER/copilot-api/stargazers)
-[![Downloads](https://pepy.tech/badge/copilot-api)](https://pepy.tech/project/copilot-api)
+[![Downloads](https://static.pepy.tech/badge/copilot-api)](https://pepy.tech/project/copilot-api)
+[![Downloads/Month](https://static.pepy.tech/badge/copilot-api/month)](https://pepy.tech/project/copilot-api)
+[![Downloads/Week](https://static.pepy.tech/badge/copilot-api/week)](https://pepy.tech/project/copilot-api)
 [![Last Commit](https://img.shields.io/github/last-commit/OE-LUCIFER/copilot-api)](https://github.com/OE-LUCIFER/copilot-api/commits/main)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![GitHub issues](https://img.shields.io/github/issues/OE-LUCIFER/copilot-api)](https://github.com/OE-LUCIFER/copilot-api/issues)
@@ -24,6 +26,7 @@
 [Support](#-support)
 
 </div>
+
 
 ## ⭐ Stargazers
 
@@ -309,7 +312,7 @@ The HelpingAI License is a proprietary license that grants specific rights while
 
 ## 📊 Project Stats
 
-![Alt](https://repobeats.axiom.co/api/embed/your-repobeats-hash.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/ff8173c0c516e81b66502ce32e1b386dd3da2fdc.svg "Repobeats analytics image")
 
 ## 📈 Star History
 
