@@ -1,0 +1,37 @@
+name: 🧹 Close Inactive Issues
+
+on:
+  schedule:
+    - cron: "0 1 * * *"  # Run at 7:00 AM IST
+
+jobs:
+  close-issues:
+    name: 🔍 Check Inactive Issues
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: 🔄 Close Stale Issues and PRs
+        uses: actions/stale@v8
+        with:
+          # Issues
+          days-before-issue-stale: 7
+          days-before-issue-close: 7
+          stale-issue-message: "👋 This issue has been automatically marked as stale because it has not had recent activity. It will be closed in 7 days if no further activity occurs."
+          close-issue-message: "🔒 This issue has been automatically closed due to inactivity. Feel free to reopen it if you still need help!"
+          stale-issue-label: "🏷️ stale"
+          
+          # Pull Requests
+          days-before-pr-stale: 7
+          days-before-pr-close: 7
+          stale-pr-message: "👋 This PR has been automatically marked as stale because it has not had recent activity. It will be closed in 7 days if no further activity occurs."
+          close-pr-message: "🔒 This PR has been automatically closed due to inactivity. Feel free to reopen it if you'd like to continue working on it!"
+          stale-pr-label: "🏷️ stale"
+          
+          # General
+          exempt-issue-labels: "🚫 no-stale,🐛 bug,✨ enhancement"
+          exempt-pr-labels: "🚫 no-stale,🔄 in progress"
+          operations-per-run: 100
+          ascending: true

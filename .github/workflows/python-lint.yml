@@ -1,0 +1,42 @@
+name: 🎨 Code Style
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: 🔍 Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+        check-latest: true
+    
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install black isort flake8 mypy
+    
+    - name: 🎨 Check code formatting with Black
+      run: |
+        black --check .
+    
+    - name: 🔄 Check import sorting with isort
+      run: |
+        isort --check-only --diff .
+    
+    - name: 🔍 Check code style with flake8
+      run: |
+        flake8 .
+    
+    - name: 🔎 Check types with mypy
+      run: |
+        mypy copilot_api/
